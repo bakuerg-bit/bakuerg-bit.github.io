@@ -6,6 +6,7 @@ import { ModeToggle } from "./ModeToggle";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
 
   // Auto-close expanded menu on scroll
   useEffect(() => {
@@ -28,13 +29,13 @@ const Navbar = () => {
       { title: "Custom SaaS", desc: "End-to-end software as a service builds.", href: "#saas" },
       { title: "Data Engines", desc: "Advanced data processing and visualization.", href: "#data" },
       { title: "Mobile Core", desc: "React Native cross-platform infrastructure.", href: "#mobile" },
-    ],
+    ], 
     developers: [
-      { title: "API Portal", desc: "Documentation for technical integrations.", href: "#docs" },
-      { title: "OSS Tools", desc: "Our public contributions to the dev community.", href: "#oss" },
+      { title: "API Portal", desc: "Request technical integration credentials.", href: "mailto:info@synctech.al?subject=API Access Request" },
+      { title: "OSS Tools", desc: "View our public repositories and contributions.", href: "https://github.com/bakuerg-bit" },
       { title: "System Status", desc: "Live monitoring of SyncTech infrastructure.", href: "#status" },
-      { title: "Tech Stack", desc: "The frameworks powering our digital future.", href: "#stack" },
-    ]
+      { title: "Tech Stack", desc: "The frameworks powering our digital future.", href: "#stack"},
+    ],
   };
 
   return (
@@ -69,9 +70,14 @@ const Navbar = () => {
                           key={option.title} 
                           href={option.href} 
                           className="group/item block transition-all hover:translate-x-1"
+                          onMouseEnter={() => setHoveredItem(option.title)}
+                          onMouseLeave={() => setHoveredItem(null)}
                           onClick={() => setActiveMenu(null)}
                         >
-                          <div className="text-xs font-bold uppercase tracking-wider text-foreground mb-1 group-hover/item:text-primary transition-colors">
+                          <div 
+                            className="text-xs font-bold uppercase tracking-wider mb-1 transition-colors"
+                            style={{ color: hoveredItem === option.title ? 'hsl(var(--primary))' : 'inherit' }}
+                          >
                             {option.title}
                           </div>
                           <div className="text-[12px] text-muted-foreground leading-relaxed font-normal">
@@ -115,7 +121,6 @@ const Navbar = () => {
         {isOpen && (
           <div className="fixed inset-0 top-16 z-40 md:hidden animate-fade-in bg-background dark:bg-black/95 backdrop-blur-2xl px-6 py-10 border-t border-border/50 overflow-y-auto h-[calc(100vh-64px)]">
             <div className="flex flex-col gap-8">
-              {/* Dropdown Groups for Mobile */}
               {Object.entries(menus).map(([key, options]) => (
                 <div key={key} className="space-y-4">
                   <h4 className="text-[10px] font-bold uppercase tracking-[0.3em] text-primary">{key}</h4>
@@ -137,20 +142,8 @@ const Navbar = () => {
 
               {/* Main Section Links */}
               <div className="space-y-4 pt-4 border-t border-border/30">
-                <a 
-                  href="#about" 
-                  className="block text-2xl font-bold tracking-tighter text-foreground" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  About
-                </a>
-                <a 
-                  href="#contact" 
-                  className="block text-2xl font-bold tracking-tighter text-foreground" 
-                  onClick={() => setIsOpen(false)}
-                >
-                  Contact
-                </a>
+                <a href="#about" className="block text-2xl font-bold tracking-tighter text-foreground" onClick={() => setIsOpen(false)}>About</a>
+                <a href="#contact" className="block text-2xl font-bold tracking-tighter text-foreground" onClick={() => setIsOpen(false)}>Contact</a>
               </div>
 
               <a href="#contact" onClick={() => setIsOpen(false)} className="mt-4 pb-20">

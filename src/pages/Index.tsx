@@ -9,6 +9,7 @@ import FAQ from "@/components/FAQ";
 import Testimonials from "@/components/Testimonials";
 import TechStack from "@/components/TechStack";
 import AnimatedSection from "@/components/AnimatedSection";
+import FeatureSlider from "@/components/FeatureSlider";
 
 const Index = () => {
   return (
@@ -24,7 +25,12 @@ const Index = () => {
       <div className="min-h-screen bg-background">
         <Navbar />
         <main>
+          {/* Main Landing Flow */}
           <Hero />
+          
+          {/* The interactive sliding section we added */}
+          <FeatureSlider /> 
+          
           <Services />
           <About />
           <Testimonials />

@@ -2,21 +2,49 @@ import { useState } from "react";
 import AnimatedSection from "./AnimatedSection";
 import { Mail, Phone, MapPin, Send, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useToast } from "@/hooks/use-toast"; // Added for professional feedback
 
 const Contact = () => {
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
+
+    const formData = new FormData(e.currentTarget);
+    
+    try {
+      const response = await fetch("https://formspree.io/f/xkoweedl", {
+        method: "POST",
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Inquiry Sent",
+          description: "SyncTech engineering has received your message.",
+        });
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Submission Error",
+        description: "Please try again or contact us directly via email.",
+      });
+    } finally {
       setLoading(false);
-      alert("Inquiry sent successfully!");
-    }, 2000);
+    }
   };
 
   const contactDetails = [
-    { icon: <Mail className="w-5 h-5" />, label: "Email us", value: "tech@Synctechltd.space", href: "mailto:tech@Synctechltd.space" },
+    { icon: <Mail className="w-5 h-5" />, label: "Email us", value: "tech@synctechltd.space", href: "mailto:tech@synctechltd.space" },
     { icon: <Phone className="w-5 h-5" />, label: "Call us", value: "+355 69 297 6930", href: "tel:+355692976930" },
     { icon: <MapPin className="w-5 h-5" />, label: "Office", value: "Tirana, Albania", href: "#" }
   ];
@@ -26,7 +54,7 @@ const Contact = () => {
       <div className="container mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
           
-          {/* LEFT SIDE: (KEPT AS IS) */}
+          {/* LEFT SIDE */}
           <div className="flex flex-col justify-center">
             <AnimatedSection>
               <p className="text-sm text-muted-foreground uppercase tracking-widest mb-4 font-medium">Contact</p>
@@ -51,26 +79,24 @@ const Contact = () => {
             </div>
           </div>
 
-          {/* RIGHT SIDE: (NOW FULLY ANIMATED LIKE THE REST) */}
+          {/* RIGHT SIDE */}
           <div className="relative">
-            {/* Main Form Container Animation */}
             <AnimatedSection delay={0.3} direction="up">
               <div className="glass-card p-8 md:p-12 w-full rounded-none border border-border/50 bg-white/95 shadow-sm">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
-                  {/* Staggered Inputs */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <AnimatedSection delay={0.4} direction="up">
                       <div className="space-y-2">
                         <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Full Name</label>
-                        <input required type="text" placeholder="Name" className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors font-sans" />
+                        <input name="name" required type="text" placeholder="Name" className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors font-sans text-foreground" />
                       </div>
                     </AnimatedSection>
                     
                     <AnimatedSection delay={0.5} direction="up">
                       <div className="space-y-2">
                         <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Email Address</label>
-                        <input required type="email" placeholder="Email" className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors font-sans" />
+                        <input name="email" required type="email" placeholder="Email" className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors font-sans text-foreground" />
                       </div>
                     </AnimatedSection>
                   </div>
@@ -78,7 +104,7 @@ const Contact = () => {
                   <AnimatedSection delay={0.6} direction="up">
                     <div className="space-y-2">
                       <label className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Message</label>
-                      <textarea required rows={4} placeholder="Your project details..." className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors resize-none font-sans" />
+                      <textarea name="message" required rows={4} placeholder="Your project details..." className="w-full bg-secondary/30 border border-border/50 px-5 py-4 text-sm outline-none focus:border-primary transition-colors resize-none font-sans text-foreground" />
                     </div>
                   </AnimatedSection>
 
