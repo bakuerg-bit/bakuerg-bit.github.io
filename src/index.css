@@ -1,0 +1,183 @@
+/* stylelint-disable */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* stylelint-enable */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 8%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 8%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
+
+    --primary: 0 0% 8%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 96%;
+    --secondary-foreground: 0 0% 20%;
+
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 50%;
+
+    --accent: 0 0% 94%;
+    --accent-foreground: 0 0% 8%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 92%;
+    --input: 0 0% 92%;
+    --ring: 0 0% 8%;
+
+    --radius: 0px;
+
+    /* FIX: Light Mode Glass (Must be Light) */
+    --glass-bg: 0 0% 100% / 0.8;
+    --glass-border: 0 0% 0% / 0.05;
+    --glass-highlight: 0 0% 100% / 0.6;
+    
+    /* Shadows */
+    --shadow-glass: 0 2px 40px 0 hsl(0 0% 0% / 0.04);
+    --shadow-hover: 0 8px 60px 0 hsl(0 0% 0% / 0.08);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 20%;
+    --sidebar-primary: 0 0% 8%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 20%;
+    --sidebar-border: 0 0% 92%;
+    --sidebar-ring: 0 0% 8%;
+  }
+
+  .dark {
+    /* Pure deep black background */
+    --background: 0 0% 2%; 
+    --foreground: 0 0% 100%; /* Pure White */
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%; /* Pure White */
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 0 0% 100%;
+    --primary-foreground: 0 0% 9%;
+
+    --secondary: 0 0% 4%; 
+    --secondary-foreground: 0 0% 100%;
+
+    /* Boosted muted text for Strategy/Design titles */
+    --muted: 0 0% 8%;
+    --muted-foreground: 0 0% 85%; /* Much brighter gray/white */
+
+    --accent: 0 0% 10%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%; /* Slightly brighter borders for definition */
+    --input: 0 0% 18%;
+    --ring: 0 0% 100%;
+
+    --glass-bg: 0 0% 7% / 0.98;
+    --glass-border: 0 0% 100% / 0.12; /* Brighter edge light */
+    
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 0 0% 9%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased transition-colors duration-300;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', sans-serif;
+  }
+}
+
+@layer components {
+  /* This ensures the Hero's glass navbar and elements stay dark */
+  .glass {
+    background: hsl(var(--glass-bg)) !important;
+    backdrop-filter: blur(80px) saturate(150%);
+    -webkit-backdrop-filter: blur(80px) saturate(150%);
+    border: 1px solid hsl(var(--glass-border)) !important;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.5s ease;
+  }
+
+  .glass-card {
+    /* FORCE the dark background from our variable, overriding hidden grays */
+    background: hsl(var(--glass-bg)) !important; 
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border: 1px solid hsl(var(--glass-border)) !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
+    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+  }
+  
+  .glass-card:hover {
+    transform: translateY(-4px) scale(1.01);
+    background: hsla(var(--foreground) / 0.06) !important; 
+    border: 1px solid hsla(var(--foreground) / 0.2) !important;
+    box-shadow: var(--shadow-hover);
+  }
+
+  .interactive-card {
+    background: hsl(var(--glass-bg)) !important;
+    backdrop-filter: blur(80px);
+    border: 1px solid hsl(var(--glass-border)) !important;
+    transition: all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1);
+    cursor: pointer;
+  }
+
+  .interactive-card:hover {
+    transform: translateY(-6px);
+    background: hsla(var(--foreground) / 0.08) !important;
+    border: 1px solid hsla(var(--foreground) / 0.25) !important;
+  }
+}
+
+/* Utilities unchanged */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+  .animate-fade-in { animation: fade-in 0.8s ease forwards; }
+  .animate-slide-up { animation: slide-up 0.8s ease forwards; }
+  .animate-blur-in { animation: blur-in 1s ease forwards; }
+  .animate-marquee { animation: marquee 30s linear infinite; }
+}
+
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+:target { scroll-margin-top: 100px; }
+html { scroll-behavior: smooth; }
