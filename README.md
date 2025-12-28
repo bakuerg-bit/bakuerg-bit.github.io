@@ -18,4 +18,4 @@ The official web platform for **SyncTech Ltd**, a premium digital agency special
 - SEO Optimized: Dynamic meta tags and OpenGraph support via React Helmet.
 - CI/CD Integrated: Automatic production builds on every main branch push.
 
-  Local Developmemt
+- Local Developmemt
